@@ -1,0 +1,13 @@
+.Sidebar {
+  top: 0;
+  left: 0;
+  height: 100%;
+  min-width: 150px;
+  border-right: 1px solid rgba(0, 0, 0, 0.125);
+  display: inline-block;
+}
+
+#Sidenav {
+  top: 0;
+  width: 100%;
+}

@@ -1,0 +1,9 @@
+.Civilisations {
+  display: inline-block;
+  width: 100%;
+  height: 100vh;
+}
+
+.MainComponent {
+  display: inline-block;
+}

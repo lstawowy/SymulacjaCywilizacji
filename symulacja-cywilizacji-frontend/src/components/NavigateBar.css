@@ -1,0 +1,19 @@
+.NavigateBar {
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.336);
+  background: rgb(90, 238, 231);
+}
+
+.Item {
+  border-top: 3px solid black;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#000), to(transparent));
+  background-image: -webkit-linear-gradient(#000, transparent);
+  background-image: -moz-linear-gradient(#000, transparent), -moz-linear-gradient(#000, transparent);
+  background-image: -o-linear-gradient(#000, transparent), -o-linear-gradient(#000, transparent);
+  background-image: linear-gradient(#000, transparent), linear-gradient(#000, transparent);
+  -moz-background-size: 3px 100%;
+  background-size: 3px 100%;
+  background-position: 0 0, 100% 0;
+  background-repeat: no-repeat;
+}
