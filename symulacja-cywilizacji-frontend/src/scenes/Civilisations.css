@@ -5,5 +5,11 @@
 }
 
 .MainComponent {
-  display: inline-block;
+  display: flex;
+  max-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  right: 0;
 }

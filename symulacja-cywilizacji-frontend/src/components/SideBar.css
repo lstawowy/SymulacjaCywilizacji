@@ -2,9 +2,11 @@
   top: 0;
   left: 0;
   height: 100%;
-  min-width: 150px;
+  min-width: 20%;
   border-right: 1px solid rgba(0, 0, 0, 0.125);
   display: inline-block;
+  background: #f8dd63;
+  float: left;
 }
 
 #Sidenav {

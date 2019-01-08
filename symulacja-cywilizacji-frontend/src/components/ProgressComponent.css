@@ -1,0 +1,11 @@
+.ProgressComponent {
+  text-align: center;
+  min-width: 80%;
+  position: fixed;
+  bottom: 0;
+  margin-top: 10px;
+}
+
+.ProgressButton {
+  margin-bottom: 5px;
+}

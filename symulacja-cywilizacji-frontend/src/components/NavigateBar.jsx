@@ -6,7 +6,6 @@ import {
   NavbarNav,
   NavItem,
   NavLink,
-  NavbarToggler,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
@@ -17,10 +16,6 @@ import {BrowserRouter} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
 class NavigateBar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   refreshPage() {
     window.parent.location = window.parent.location.href;
   }

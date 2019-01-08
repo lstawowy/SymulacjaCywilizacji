@@ -3,13 +3,14 @@ import "./Civilisations.css";
 import "bootstrap/dist/css/bootstrap.css";
 import NavigateBar from "../components/NavigateBar";
 import SideBar from "../components/SideBar";
+import ProgressComponent from "../components/ProgressComponent";
 
 class Civilisations extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: null,
+      data: null
     };
   }
 
@@ -19,8 +20,8 @@ class Civilisations extends Component {
         <NavigateBar />
         <SideBar />
         <div className='MainComponent'>
-          <img src='http://localhost:8080/map/current' height='200px' />
-          This is only temporary for Civilisations
+          <img alt='civilisationsMap' src='http://localhost:8080/map/current' />
+          <ProgressComponent />
         </div>
       </div>
     );
