@@ -1,6 +1,7 @@
 package com.spring.simulation.greek.map_generator;
 
 import com.spring.simulation.greek.enums.AreaType;
+import com.spring.simulation.greek.enums.ClimateType;
 import com.spring.simulation.greek.enums.MapType;
 import java.awt.image.BufferedImage;
 import java.util.Date;
@@ -110,6 +111,8 @@ public class Map {
       cell.readColorByMountainMap();
     } else if (maptype == MapType.RIVER_MAP) {
       cell.readColorByRiverMap();
+    } else if(maptype == MapType.CLIMATE_MAP){
+      cell.readColorByClimatMap();
     }
   }
 
@@ -141,6 +144,31 @@ public class Map {
     }
   }
 
+  private void setColorsByClimate(){
+    for (int i = 0; i < height; ++i) {
+      for (int j = 0; j < width; ++j) {
+        Cell cell = grid[i][j];
+        ClimateType clim = cell.getClimateType();
+        if(clim == ClimateType.NONE)
+          cell.setColor(0xFFFFFF);
+        else if (clim == ClimateType.MARINE)
+          cell.setColor(0x4099F4);
+        else if (clim == ClimateType.CONTINENTAL)
+          cell.setColor(0x003974);
+        else if (clim == ClimateType.MOUNTAIN)
+          cell.setColor(0x6E0500);
+        else if (clim == ClimateType.STEPPE)
+          cell.setColor(0xB77A07);
+        else if (clim == ClimateType.SUBTROPICAL)
+          cell.setColor(0x0FB707);
+        else if (clim == ClimateType.MEDITERRANEAN)
+          cell.setColor(0xFFF629);
+        else
+          cell.setColor(0xD20B96);
+      }
+    }
+  }
+
   public void readMap(BufferedImage map, MapType maptype) {
     for (int i = 0; i < height; ++i) {
       for (int j = 0; j < width; ++j) {
@@ -153,7 +181,8 @@ public class Map {
 
   //na razie tylko do kontroli
   public void drawMap() {
-    setColorsByArea();
+//    setColorsByArea();
+    setColorsByClimate();
     BufferedImage map = new BufferedImage(width, height, 5);
     //ustalic jaki typ najlepszy TYPE_BYTE_GRAY
     for (int i = 0; i < height; ++i) {

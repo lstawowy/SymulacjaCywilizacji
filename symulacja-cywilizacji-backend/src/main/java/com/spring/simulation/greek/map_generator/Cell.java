@@ -1,5 +1,6 @@
 package com.spring.simulation.greek.map_generator;
 
+import com.spring.simulation.greek.enums.ClimateType;
 import com.spring.simulation.greek.enums.CountryType;
 import com.spring.simulation.greek.enums.AreaType;
 
@@ -13,6 +14,7 @@ public class Cell {
 
   private CountryType country;
   private AreaType areaType;
+  private ClimateType climateType;
   private int fertility;  //zyznosc gleby, produktywnosc w procentach
   private int distanceToSea;
   private int distanceToRiver;
@@ -86,8 +88,27 @@ public class Cell {
     int c = color & 0xFF;
     if (c < 200) {
       areaType = AreaType.RIVER;
-      fertility = 0;
+      fertility = 0;  //rozwazyc zmiane!!!!!
       distanceToRiver = 0;
+    }
+  }
+
+  public void readColorByClimatMap(){
+    int c = color & 0xFF;
+    if(areaType == AreaType.SEA){
+      climateType = ClimateType.NONE;
+    } else if(c == 59){
+      climateType = ClimateType.MARINE;
+    } else if(c == 255){
+      climateType = ClimateType.CONTINENTAL;
+    } else if(c == 126){
+      climateType = ClimateType.STEPPE;
+    } else if(c == 0){
+      climateType = ClimateType.SUBTROPICAL;
+    } else if(c == 171){
+      climateType = ClimateType.MEDITERRANEAN;
+    } else{
+      climateType = ClimateType.MOUNTAIN;
     }
   }
 
@@ -105,5 +126,9 @@ public class Cell {
     } else {
       return distanceToRiver;
     }
+  }
+
+  public ClimateType getClimateType() {
+    return climateType;
   }
 }

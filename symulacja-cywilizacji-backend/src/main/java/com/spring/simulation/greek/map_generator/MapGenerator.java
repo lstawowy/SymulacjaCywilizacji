@@ -11,6 +11,7 @@ public class MapGenerator {
 
     map.readMap(MapReader.readResource("maps/mountains.jpg"), MapType.MOUNTAIN_MAP);
     map.readMap(MapReader.readResource("maps/rivers.jpg"),MapType.RIVER_MAP);
+    map.readMap(MapReader.readResource("maps/klimat.png"),MapType.CLIMATE_MAP);
     map.findLandBorder();
     map.setDistancesToWater();
     map.drawMap();
