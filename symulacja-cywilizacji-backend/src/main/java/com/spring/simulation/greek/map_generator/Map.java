@@ -26,6 +26,8 @@ public class Map {
     }
   }
 
+
+
   public void findLandBorder() {
     for (int i = 0; i < height; ++i) {
       for (int j = 0; j < width; ++j) {
@@ -57,14 +59,11 @@ public class Map {
   }
 
   public void setDistancesToWater() {
-    boolean seaFlag = true;
-    boolean riverFlag = true;
     int distance = 0;
-    while (/*seaFlag || riverFlag || */distance < 2) {
+    while (distance <100) {
       for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-          System.out.println(grid[i][j].getDistanceToSea());
-          if (grid[i][j].getDistanceToSea() == distance) {
+          if (grid[i][j].getDistanceToSea() == distance && distance != 0) {
             fillNeighbourhoodDistances(i, j, distance, AreaType.SEA);
           }
           if (grid[i][j].getDistanceToRiver() == distance) {
@@ -81,12 +80,12 @@ public class Map {
       for (int j = -1; j < 2; ++j) {
         int cx = x + i;
         int cy = y + j;
-        if (cx < 0 || cx >= height || cy < 0 || cy >= width || cx == x || cy == y) {
+        if (cx < 0 || cx >= height || cy < 0 || cy >= width || (cx == x && cy == y)) {
           continue;
         }
-//                if(grid[cx][cy].getAreaType() == Cell.AreaType.SEA)   //nie potrzeba odleglosci punktu na morzu od rzeki
-//                    continue;
-        if (grid[cx][cy].getWaterDistance(areaType) > distance + 1) {
+        if(grid[cx][cy].getAreaType() == AreaType.SEA)   //nie potrzeba odleglosci punktu na morzu od rzeki
+          continue;
+        if (grid[cx][cy].getWaterDistance(areaType) > (distance + 1)) {
           grid[cx][cy].setWaterDistace(distance + 1, areaType);
         }
       }
@@ -121,16 +120,19 @@ public class Map {
         AreaType area = cell.getAreaType();
         if (area == AreaType.SEA) {
           cell.setColor(0x42CDFF);
-        } else if (area == AreaType.LAND) {
+        }
+        else if (area == AreaType.LAND) {
           cell.setColor(0x00F274);
         }
 //                else if(area == Cell.AreaType.MOUNTAIN)
 //                    cell.setColor(0xF20012);
         else if (area == AreaType.RIVER) {
           cell.setColor(0x0002F7);
-        } else if (area == AreaType.COAST) {
+        }
+        else if (area == AreaType.COAST) {
           cell.setColor(0x0);
-        } else if (cell.getDistanceToSea() == 1) {
+        }
+        if (cell.getDistanceToRiver() == 3) {
           cell.setColor(0xFF7A06);
         }
 //                else
