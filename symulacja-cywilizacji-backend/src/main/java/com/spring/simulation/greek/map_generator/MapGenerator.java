@@ -21,7 +21,8 @@ public class MapGenerator {
       river_map = ImageIO.read(
           Objects.requireNonNull(CLASS_LOADER.getResourceAsStream("maps/rivers.jpg")));
     } catch (IOException e) {
-      log.error(e.getMessage());
+      //log.error(e.getMessage());  //!!!nie dziala mi to na razie zakomentowalem!!!
+      System.out.println(e);
     }
 
     map.readMap(mountain_map, Map.MapType.MOUNTAIN_MAP);

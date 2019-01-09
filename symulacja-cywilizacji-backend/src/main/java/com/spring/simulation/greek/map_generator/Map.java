@@ -66,14 +66,11 @@ public class Map {
   }
 
   public void setDistancesToWater() {
-    boolean seaFlag = true;
-    boolean riverFlag = true;
     int distance = 0;
-    while (/*seaFlag || riverFlag || */distance < 2) {
+    while (distance <100) {
       for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-          System.out.println(grid[i][j].getDistanceToSea());
-          if (grid[i][j].getDistanceToSea() == distance) {
+          if (grid[i][j].getDistanceToSea() == distance && distance != 0) {
             fillNeighbourhoodDistances(i, j, distance, Cell.AreaType.SEA);
           }
           if (grid[i][j].getDistanceToRiver() == distance) {
@@ -90,12 +87,12 @@ public class Map {
       for (int j = -1; j < 2; ++j) {
         int cx = x + i;
         int cy = y + j;
-        if (cx < 0 || cx >= height || cy < 0 || cy >= width | cx == x || cy == y) {
+        if (cx < 0 || cx >= height || cy < 0 || cy >= width || (cx == x && cy == y)) {
           continue;
         }
-//                if(grid[cx][cy].getAreaType() == Cell.AreaType.SEA)   //nie potrzeba odleglosci punktu na morzu od rzeki
-//                    continue;
-        if (grid[cx][cy].getWaterDistance(areaType) > distance + 1) {
+        if(grid[cx][cy].getAreaType() == Cell.AreaType.SEA)   //nie potrzeba odleglosci punktu na morzu od rzeki
+          continue;
+        if (grid[cx][cy].getWaterDistance(areaType) > (distance + 1)) {
           grid[cx][cy].setWaterDistace(distance + 1, areaType);
         }
       }
@@ -130,16 +127,19 @@ public class Map {
         Cell.AreaType area = cell.getAreaType();
         if (area == Cell.AreaType.SEA) {
           cell.setColor(0x42CDFF);
-        } else if (area == Cell.AreaType.LAND) {
+        }
+        else if (area == Cell.AreaType.LAND) {
           cell.setColor(0x00F274);
         }
 //                else if(area == Cell.AreaType.MOUNTAIN)
 //                    cell.setColor(0xF20012);
         else if (area == Cell.AreaType.RIVER) {
           cell.setColor(0x0002F7);
-        } else if (area == Cell.AreaType.COAST) {
+        }
+        else if (area == Cell.AreaType.COAST) {
           cell.setColor(0x0);
-        } else if (cell.getDistanceToSea() == 1) {
+        }
+        if (cell.getDistanceToRiver() == 3) {
           cell.setColor(0xFF7A06);
         }
 //                else
@@ -161,8 +161,7 @@ public class Map {
   //na razie tylko do kontroli
   public void drawMap() {
     setColorsByArea();
-    BufferedImage map = new BufferedImage(width, height,
-        5); //ustalic jaki typ najlepszy TYPE_BYTE_GRAY
+    BufferedImage map = new BufferedImage(width, height,5); //ustalic jaki typ najlepszy TYPE_BYTE_GRAY
     for (int i = 0; i < height; ++i) {
       for (int j = 0; j < width; ++j) {
         map.setRGB(j, i, grid[i][j].getColor());
