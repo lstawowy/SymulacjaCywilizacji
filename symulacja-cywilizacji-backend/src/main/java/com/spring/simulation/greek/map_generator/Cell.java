@@ -3,6 +3,7 @@ package com.spring.simulation.greek.map_generator;
 import com.spring.simulation.greek.enums.ClimateType;
 import com.spring.simulation.greek.enums.CountryType;
 import com.spring.simulation.greek.enums.AreaType;
+import com.spring.simulation.greek.enums.ResourceType;
 
 public class Cell {
 
@@ -18,6 +19,12 @@ public class Cell {
   private int fertility;  //zyznosc gleby, produktywnosc w procentach
   private int distanceToSea;
   private int distanceToRiver;
+
+  //Surowce naturalne
+  private boolean iron;
+  private boolean copper;
+  private boolean coal;
+  private boolean lead;
 
   public Cell(int x, int y) {
     this.x = x;
@@ -57,6 +64,61 @@ public class Cell {
 
   public void setDistanceToRiver(int distanceToRiver) {
     this.distanceToRiver = distanceToRiver;
+  }
+
+  public ClimateType getClimateType() {
+    return climateType;
+  }
+
+  public boolean isIron() {
+    return iron;
+  }
+
+  public void setIron(boolean iron) {
+    this.iron = iron;
+  }
+
+  public boolean isCopper() {
+    return copper;
+  }
+
+  public void setCopper(boolean copper) {
+    this.copper = copper;
+  }
+
+  public boolean isCoal() {
+    return coal;
+  }
+
+  public void setCoal(boolean coal) {
+    this.coal = coal;
+  }
+
+  public boolean isLead() {
+    return lead;
+  }
+
+  public void setLead(boolean lead) {
+    this.lead = lead;
+  }
+
+  public int getFertility() {
+    return fertility;
+  }
+
+  public void setFertility(int fertility) {
+    this.fertility = fertility;
+  }
+
+  public void setResource(ResourceType resource){
+    if(resource == ResourceType.IRON)
+      setIron(true);
+    else if(resource == ResourceType.COPPER)
+      setCopper(true);
+    else if(resource == ResourceType.COAL)
+      setCopper(true);
+    else if(resource == ResourceType.LEAD)
+      setLead(true);
   }
 
   //zyznosc bedzie ustalana proporcjonalnie do wysokosci n.p.m.
@@ -126,9 +188,5 @@ public class Cell {
     } else {
       return distanceToRiver;
     }
-  }
-
-  public ClimateType getClimateType() {
-    return climateType;
   }
 }

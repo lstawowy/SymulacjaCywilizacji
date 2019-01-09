@@ -3,6 +3,8 @@ package com.spring.simulation.greek.map_generator;
 import com.spring.simulation.greek.enums.AreaType;
 import com.spring.simulation.greek.enums.ClimateType;
 import com.spring.simulation.greek.enums.MapType;
+import com.spring.simulation.greek.enums.ResourceType;
+
 import java.awt.image.BufferedImage;
 import java.util.Date;
 
@@ -124,20 +126,20 @@ public class Map {
         if (area == AreaType.SEA) {
           cell.setColor(0x42CDFF);
         }
-        else if (area == AreaType.LAND) {
-          cell.setColor(0x00F274);
-        }
+//        else if (area == AreaType.LAND) {
+//          cell.setColor(0x00F274);
+//        }
 //                else if(area == Cell.AreaType.MOUNTAIN)
 //                    cell.setColor(0xF20012);
-        else if (area == AreaType.RIVER) {
-          cell.setColor(0x0002F7);
-        }
+//        else if (area == AreaType.RIVER) {
+//          cell.setColor(0x0002F7);
+//        }
         else if (area == AreaType.COAST) {
           cell.setColor(0x0);
         }
-        if (cell.getDistanceToRiver() == 3) {
-          cell.setColor(0xFF7A06);
-        }
+//        if (cell.getDistanceToRiver() == 3) {
+//          cell.setColor(0xFF7A06);
+//        }
 //                else
 //                    cell.setColor(0xFF);
       }
@@ -179,10 +181,22 @@ public class Map {
     }
   }
 
+  public void readNaturalResourcesMap(BufferedImage map, ResourceType resource){
+    for (int i = 0; i < height; ++i) {
+      for (int j = 0; j < width; ++j) {
+        int pixelColor = map.getRGB(j, i);
+        if(grid[i][j].getAreaType() !=AreaType.SEA && (pixelColor & 0xFFFF) == 0xE00) {
+          grid[i][j].setResource(resource);
+          grid[i][j].setColor(pixelColor);
+        }
+      }
+    }
+  }
+
   //na razie tylko do kontroli
   public void drawMap() {
-//    setColorsByArea();
-    setColorsByClimate();
+    setColorsByArea();
+//    setColorsByClimate();
     BufferedImage map = new BufferedImage(width, height, 5);
     //ustalic jaki typ najlepszy TYPE_BYTE_GRAY
     for (int i = 0; i < height; ++i) {
