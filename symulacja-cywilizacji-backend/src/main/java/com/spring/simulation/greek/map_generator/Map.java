@@ -81,7 +81,7 @@ public class Map {
       for (int j = -1; j < 2; ++j) {
         int cx = x + i;
         int cy = y + j;
-        if (cx < 0 || cx >= height || cy < 0 || cy >= width | cx == x || cy == y) {
+        if (cx < 0 || cx >= height || cy < 0 || cy >= width || cx == x || cy == y) {
           continue;
         }
 //                if(grid[cx][cy].getAreaType() == Cell.AreaType.SEA)   //nie potrzeba odleglosci punktu na morzu od rzeki
