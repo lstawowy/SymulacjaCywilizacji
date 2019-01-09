@@ -161,8 +161,7 @@ public class Map {
   //na razie tylko do kontroli
   public void drawMap() {
     setColorsByArea();
-    BufferedImage map = new BufferedImage(width, height,
-        5); //ustalic jaki typ najlepszy TYPE_BYTE_GRAY
+    BufferedImage map = new BufferedImage(width, height,5); //ustalic jaki typ najlepszy TYPE_BYTE_GRAY
     for (int i = 0; i < height; ++i) {
       for (int j = 0; j < width; ++j) {
         map.setRGB(j, i, grid[i][j].getColor());
