@@ -1,25 +1,16 @@
 package com.spring.simulation.greek.map_generator;
 
-import com.spring.simulation.greek.map_generator.Cell;
-import java.util.Objects;
-import javax.imageio.ImageIO;
-import java.awt.geom.Area;
+import com.spring.simulation.greek.enums.AreaType;
+import com.spring.simulation.greek.enums.MapType;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import static java.awt.image.BufferedImage.TYPE_BYTE_GRAY;
+import java.util.Date;
 
 public class Map {
-
-  public enum MapType {
-    MOUNTAIN_MAP,
-    RIVER_MAP
-  }
 
   private int height;
   private int width;
   private Cell[][] grid;
+  private Date timestamp;
 
   Map() {
     width = 728;
@@ -38,18 +29,18 @@ public class Map {
   public void findLandBorder() {
     for (int i = 0; i < height; ++i) {
       for (int j = 0; j < width; ++j) {
-        if (grid[i][j].getAreaType() == Cell.AreaType.SEA) {
+        if (grid[i][j].getAreaType() == AreaType.SEA) {
           continue;
         }
-        if (findNeighbourByAreaType(i, j, Cell.AreaType.SEA)) {
-          grid[i][j].setAreaType(Cell.AreaType.COAST);
+        if (findNeighbourByAreaType(i, j, AreaType.SEA)) {
+          grid[i][j].setAreaType(AreaType.COAST);
           grid[i][j].setDistanceToSea(1);
         }
       }
     }
   }
 
-  private boolean findNeighbourByAreaType(int x, int y, Cell.AreaType areaType) {
+  private boolean findNeighbourByAreaType(int x, int y, AreaType areaType) {
     for (int i = -1; i < 2; ++i) {
       for (int j = -1; j < 2; ++j) {
         int cx = x + i;
@@ -66,15 +57,18 @@ public class Map {
   }
 
   public void setDistancesToWater() {
+    boolean seaFlag = true;
+    boolean riverFlag = true;
     int distance = 0;
-    while (distance <100) {
+    while (/*seaFlag || riverFlag || */distance < 2) {
       for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-          if (grid[i][j].getDistanceToSea() == distance && distance != 0) {
-            fillNeighbourhoodDistances(i, j, distance, Cell.AreaType.SEA);
+          System.out.println(grid[i][j].getDistanceToSea());
+          if (grid[i][j].getDistanceToSea() == distance) {
+            fillNeighbourhoodDistances(i, j, distance, AreaType.SEA);
           }
           if (grid[i][j].getDistanceToRiver() == distance) {
-            fillNeighbourhoodDistances(i, j, distance, Cell.AreaType.RIVER);
+            fillNeighbourhoodDistances(i, j, distance, AreaType.RIVER);
           }
         }
       }
@@ -82,17 +76,17 @@ public class Map {
     }
   }
 
-  private void fillNeighbourhoodDistances(int x, int y, int distance, Cell.AreaType areaType) {
+  private void fillNeighbourhoodDistances(int x, int y, int distance, AreaType areaType) {
     for (int i = -1; i < 2; ++i) {
       for (int j = -1; j < 2; ++j) {
         int cx = x + i;
         int cy = y + j;
-        if (cx < 0 || cx >= height || cy < 0 || cy >= width || (cx == x && cy == y)) {
+        if (cx < 0 || cx >= height || cy < 0 || cy >= width | cx == x || cy == y) {
           continue;
         }
-        if(grid[cx][cy].getAreaType() == Cell.AreaType.SEA)   //nie potrzeba odleglosci punktu na morzu od rzeki
-          continue;
-        if (grid[cx][cy].getWaterDistance(areaType) > (distance + 1)) {
+//                if(grid[cx][cy].getAreaType() == Cell.AreaType.SEA)   //nie potrzeba odleglosci punktu na morzu od rzeki
+//                    continue;
+        if (grid[cx][cy].getWaterDistance(areaType) > distance + 1) {
           grid[cx][cy].setWaterDistace(distance + 1, areaType);
         }
       }
@@ -124,22 +118,19 @@ public class Map {
     for (int i = 0; i < height; ++i) {
       for (int j = 0; j < width; ++j) {
         Cell cell = grid[i][j];
-        Cell.AreaType area = cell.getAreaType();
-        if (area == Cell.AreaType.SEA) {
+        AreaType area = cell.getAreaType();
+        if (area == AreaType.SEA) {
           cell.setColor(0x42CDFF);
-        }
-        else if (area == Cell.AreaType.LAND) {
+        } else if (area == AreaType.LAND) {
           cell.setColor(0x00F274);
         }
 //                else if(area == Cell.AreaType.MOUNTAIN)
 //                    cell.setColor(0xF20012);
-        else if (area == Cell.AreaType.RIVER) {
+        else if (area == AreaType.RIVER) {
           cell.setColor(0x0002F7);
-        }
-        else if (area == Cell.AreaType.COAST) {
+        } else if (area == AreaType.COAST) {
           cell.setColor(0x0);
-        }
-        if (cell.getDistanceToRiver() == 3) {
+        } else if (cell.getDistanceToSea() == 1) {
           cell.setColor(0xFF7A06);
         }
 //                else
@@ -161,18 +152,14 @@ public class Map {
   //na razie tylko do kontroli
   public void drawMap() {
     setColorsByArea();
-    BufferedImage map = new BufferedImage(width, height,5); //ustalic jaki typ najlepszy TYPE_BYTE_GRAY
+    BufferedImage map = new BufferedImage(width, height, 5);
+    //ustalic jaki typ najlepszy TYPE_BYTE_GRAY
     for (int i = 0; i < height; ++i) {
       for (int j = 0; j < width; ++j) {
         map.setRGB(j, i, grid[i][j].getColor());
       }
     }
-    try {
-      File outputfile = new File("newmap.gif");
-      ImageIO.write(map, "gif", outputfile);
-    } catch (IOException e) {
-      System.out.print(e);
-    }
+    MapReader.saveImageInResources(map);
 
   }
 }

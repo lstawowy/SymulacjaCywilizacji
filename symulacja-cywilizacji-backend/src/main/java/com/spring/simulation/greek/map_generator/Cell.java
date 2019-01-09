@@ -1,21 +1,17 @@
 package com.spring.simulation.greek.map_generator;
 
+import com.spring.simulation.greek.enums.CountryType;
+import com.spring.simulation.greek.enums.AreaType;
+
 public class Cell {
 
-  public enum AreaType {
-    SEA,        //morze
-    LAND,      //lad, czyli mozna sie osiedlac
-    MOUNTAIN,   //gora, brak zyznosci, ale moze miec wartosc obronno-militarna
-    RIVER,      //rzeka, bez zyznosci, ale za tereny przy rzece beda propsy
-    COAST       //wybrzeze - propsy za dostep do morza
-  }
-
+  // Tu beda wszystkie parametry dla danej komorki, z ktorych bedziemy kiedys wyliczac czy dany teren jest korzystny dla
+  //rozwoju czy tez nie
   private int x;
   private int y;
   private int color;
 
-  // Tu beda wszystkie parametry dla danej komorki, z ktorych bedziemy kiedys wyliczac czy dany teren jest korzystny dla
-  //rozwoju czy tez nie
+  private CountryType country;
   private AreaType areaType;
   private int fertility;  //zyznosc gleby, produktywnosc w procentach
   private int distanceToSea;
