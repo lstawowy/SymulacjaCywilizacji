@@ -1,23 +1,31 @@
 package com.spring.simulation.greek.map_generator;
 
+import com.spring.simulation.greek.Simulation.Country;
 import com.spring.simulation.greek.enums.ClimateType;
 import com.spring.simulation.greek.enums.CountryType;
 import com.spring.simulation.greek.enums.AreaType;
+import com.spring.simulation.greek.enums.ResourceType;
 
 public class Cell {
 
-  // Tu beda wszystkie parametry dla danej komorki, z ktorych bedziemy kiedys wyliczac czy dany teren jest korzystny dla
-  //rozwoju czy tez nie
   private int x;
   private int y;
   private int color;
 
-  private CountryType country;
+  private Country country;
   private AreaType areaType;
   private ClimateType climateType;
   private int fertility;  //zyznosc gleby, produktywnosc w procentach
   private int distanceToSea;
   private int distanceToRiver;
+
+  //Surowce naturalne
+  private boolean iron;
+  private boolean copper;
+  private boolean coal;
+  private boolean lead;
+
+  private int population;
 
   public Cell(int x, int y) {
     this.x = x;
@@ -25,45 +33,18 @@ public class Cell {
     color = 0;
     distanceToRiver = Integer.MAX_VALUE;
     distanceToSea = Integer.MAX_VALUE;
-  }
-
-  public int getColor() {
-    return color;
-  }
-
-  public void setColor(int color) {
-    this.color = color;
-  }
-
-  public AreaType getAreaType() {
-    return areaType;
-  }
-
-  public void setAreaType(AreaType areaType) {
-    this.areaType = areaType;
-  }
-
-  public int getDistanceToSea() {
-    return distanceToSea;
-  }
-
-  public void setDistanceToSea(int distanceToSea) {
-    this.distanceToSea = distanceToSea;
-  }
-
-  public int getDistanceToRiver() {
-    return distanceToRiver;
-  }
-
-  public void setDistanceToRiver(int distanceToRiver) {
-    this.distanceToRiver = distanceToRiver;
+    iron = false;
+    copper = false;
+    coal = false;
+    lead = false;
+    population = 10;  //basic populatrion
   }
 
   //zyznosc bedzie ustalana proporcjonalnie do wysokosci n.p.m.
   private void countFertility(int c) {
     if (c > 220) {
       fertility = 100;
-    } else if (c <= 220 && c >= 165) {  //mozna jeszcze podniesc dolny zakres
+    } else if (c <= 220 && c >= 165) {
       int range = 500;
       fertility = (c / range) * 100;
     } else {
@@ -88,7 +69,7 @@ public class Cell {
     int c = color & 0xFF;
     if (c < 200) {
       areaType = AreaType.RIVER;
-      fertility = 0;  //rozwazyc zmiane!!!!!
+      fertility = 80;
       distanceToRiver = 0;
     }
   }
@@ -128,7 +109,103 @@ public class Cell {
     }
   }
 
+  public void setResource(ResourceType resource){
+    if(resource == ResourceType.IRON)
+      setIron(true);
+    else if(resource == ResourceType.COPPER)
+      setCopper(true);
+    else if(resource == ResourceType.COAL)
+      setCopper(true);
+    else if(resource == ResourceType.LEAD)
+      setLead(true);
+  }
+
+  ////////////////////////////////////// Settery, gettery /////////////////////////////////////
+  public int getColor() {
+    return color;
+  }
+
+  public void setColor(int color) {
+    this.color = color;
+  }
+
+  public AreaType getAreaType() {
+    return areaType;
+  }
+
+  protected void setAreaType(AreaType areaType) {
+    this.areaType = areaType;
+  }
+
+  public int getDistanceToSea() {
+    return distanceToSea;
+  }
+
+  protected void setDistanceToSea(int distanceToSea) {
+    this.distanceToSea = distanceToSea;
+  }
+
+  public int getDistanceToRiver() {
+    return distanceToRiver;
+  }
+
+  protected void setDistanceToRiver(int distanceToRiver) {
+    this.distanceToRiver = distanceToRiver;
+  }
+
   public ClimateType getClimateType() {
     return climateType;
+  }
+
+  public boolean isIron() {
+    return iron;
+  }
+
+  protected void setIron(boolean iron) {
+    this.iron = iron;
+  }
+
+  public boolean isCopper() {
+    return copper;
+  }
+
+  protected void setCopper(boolean copper) {
+    this.copper = copper;
+  }
+
+  public boolean isCoal() {
+    return coal;
+  }
+
+  protected void setCoal(boolean coal) {
+    this.coal = coal;
+  }
+
+  public boolean isLead() {
+    return lead;
+  }
+
+  protected void setLead(boolean lead) {
+    this.lead = lead;
+  }
+
+  public int getFertility() {
+    return fertility;
+  }
+
+  protected void setFertility(int fertility) {
+    this.fertility = fertility;
+  }
+
+  public void setCountry(Country country) {
+    this.country = country;
+  }
+
+  public int getPopulation() {
+    return population;
+  }
+
+  public void setPopulation(int population) {
+    this.population = population;
   }
 }

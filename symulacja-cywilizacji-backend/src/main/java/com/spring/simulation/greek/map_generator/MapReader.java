@@ -11,7 +11,6 @@ import org.apache.commons.io.IOUtils;
 
 @Slf4j
 public class MapReader {
-
   private static final ClassLoader CLASS_LOADER = MapReader.class.getClassLoader();
   private static final String RESOURCES_PATH = "src/main/resources/";
   private static final String WRITE_FILE_FORMAT = "gif";
