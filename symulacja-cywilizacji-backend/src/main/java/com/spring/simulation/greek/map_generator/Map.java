@@ -60,7 +60,7 @@ public class Map {
   }
 
   public void setDistancesToWater() {
-    int distance = 0;
+    int distance = 1;
     while (distance <100) {
       for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
@@ -89,6 +89,18 @@ public class Map {
         if (grid[cx][cy].getWaterDistance(areaType) > (distance + 1)) {
           grid[cx][cy].setWaterDistace(distance + 1, areaType);
         }
+      }
+    }
+  }
+
+  public void evaluateProvinces(){
+    for (int i = 0; i < height; ++i) {
+      for (int j = 0; j < width; ++j) {
+        if (grid[i][j].getAreaType() == AreaType.SEA) {
+          continue;
+        }
+        grid[i][j].countAreaFriendlinessFactor();
+        grid[i][j].countPopulation();
       }
     }
   }

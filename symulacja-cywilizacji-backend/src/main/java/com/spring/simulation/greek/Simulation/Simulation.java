@@ -40,6 +40,7 @@ public class Simulation {
     public static void main(String[] args){
         Map map = MapGenerator.readDataFromMapImages();
         setColorsByCountries();
+        map.evaluateProvinces();
         createInitialCountries();
         for(Country c : countriesList){
             c.conquerTerritory();

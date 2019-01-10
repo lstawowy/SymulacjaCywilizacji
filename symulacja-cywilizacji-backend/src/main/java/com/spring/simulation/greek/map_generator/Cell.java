@@ -1,10 +1,7 @@
 package com.spring.simulation.greek.map_generator;
 
 import com.spring.simulation.greek.Simulation.Country;
-import com.spring.simulation.greek.enums.ClimateType;
-import com.spring.simulation.greek.enums.CountryType;
-import com.spring.simulation.greek.enums.AreaType;
-import com.spring.simulation.greek.enums.ResourceType;
+import com.spring.simulation.greek.enums.*;
 
 public class Cell {
 
@@ -25,7 +22,9 @@ public class Cell {
   private boolean coal;
   private boolean lead;
 
-  private int population;
+  private double population;
+
+  private double areaFriendlinessFactor;
 
   public Cell(int x, int y) {
     this.x = x;
@@ -37,7 +36,6 @@ public class Cell {
     copper = false;
     coal = false;
     lead = false;
-    population = 10;  //basic populatrion
   }
 
   //zyznosc bedzie ustalana proporcjonalnie do wysokosci n.p.m.
@@ -70,7 +68,7 @@ public class Cell {
     if (c < 200) {
       areaType = AreaType.RIVER;
       fertility = 80;
-      distanceToRiver = 0;
+      distanceToRiver = 1;
     }
   }
 
@@ -120,6 +118,48 @@ public class Cell {
       setLead(true);
   }
 
+  public void countAreaFriendlinessFactor(){
+    areaFriendlinessFactor = getClimateFactor()*getAreaFactor();
+  }
+
+  public void countPopulation(){
+    population = Score.basicPopulation * areaFriendlinessFactor;
+  }
+  ////////////////////////////////////// czynniki atrakcyjnosci terenu/////////////////////////
+
+  public double getClimateFactor(){
+    switch(climateType){
+      case MARINE:
+        return Score.marineFactor;
+      case STEPPE:
+        return Score.steppeFactor;
+      case MOUNTAIN:
+        return Score.mountainClimateFactor;
+      case CONTINENTAL:
+        return Score.continentalFactor;
+      case SUBTROPICAL:
+        return Score.subtropicalFactor;
+      case MEDITERRANEAN:
+        return Score.mediterraneanFactor;
+      default:
+        return Score.defaultFactor;
+    }
+  }
+
+  public double getAreaFactor(){
+    switch(areaType){
+      case LAND:
+        return Score.landFactor;
+      case COAST:
+        return Score.coastFactor;
+      case RIVER:
+        return Score.riverFactor;
+      case MOUNTAIN:
+        return Score.mountainAreaFactor;
+      default:
+        return Score.defaultFactor;
+    }
+  }
   ////////////////////////////////////// Settery, gettery /////////////////////////////////////
   public int getColor() {
     return color;
@@ -201,7 +241,7 @@ public class Cell {
     this.country = country;
   }
 
-  public int getPopulation() {
+  public double getPopulation() {
     return population;
   }
 
