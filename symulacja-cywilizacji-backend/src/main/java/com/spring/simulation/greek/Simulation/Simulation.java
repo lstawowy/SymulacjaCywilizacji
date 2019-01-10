@@ -17,8 +17,8 @@ public class Simulation {
     public static java.util.Map<Country,Integer> countryColor = new HashMap<>();
 
     private static void createInitialCountries(){
-        countriesList.add(new Country("Greece",420,360, 0x24FF39));
-        countriesList.add(new Country("Rome", 324,316, 0xF90A0A));
+        countriesList.add(new Country("Greece",360,420, 0x24FF39));
+        countriesList.add(new Country("Rome", 316,324, 0xF90A0A));
     }
 
     private static void setColorsByCountries(){
@@ -27,21 +27,48 @@ public class Simulation {
                 Cell cell = Map.grid[i][j];
                 if(cell.getAreaType() == AreaType.SEA)
                     cell.setColor(0x0AE4F9);
-                else if(cell.getAreaType() == AreaType.RIVER)
-                    cell.setColor(0x010EEB);
+//                else if(cell.getAreaType() == AreaType.RIVER)
+//                    cell.setColor(0x010EEB);
                 else if(cell.getAreaType() == AreaType.COAST)
                     cell.setColor(0x0);
                 else
                     cell.setColor(0xFFFFFF);
+//                if(cell.getDistanceToRiver() == 40)
+//                    cell.setColor(0xED09C2);
             }
         }
+    }
+
+    public static int maxSeaDistance(){
+        int maxDistance = -1;
+        for(int i=0 ; i<Map.height ; ++i){
+            for(int j=0 ; j<Map.width ; ++j){
+                if(Map.grid[i][j].getDistanceToSea() > maxDistance)
+                    maxDistance = Map.grid[i][j].getDistanceToSea();
+            }
+        }
+        return maxDistance;
+    }
+
+    public static int maxRiverDistance(){
+        int maxDistance = -1;
+        for(int i=0 ; i<Map.height ; ++i){
+            for(int j=0 ; j<Map.width ; ++j){
+                if(Map.grid[i][j].getDistanceToRiver() > maxDistance && Map.grid[i][j].getDistanceToRiver() != Integer.MAX_VALUE)
+                    maxDistance = Map.grid[i][j].getDistanceToRiver();
+            }
+        }
+        return maxDistance;
     }
 
     public static void main(String[] args){
         Map map = MapGenerator.readDataFromMapImages();
         setColorsByCountries();
+        map.evaluateProvinces();
         createInitialCountries();
-
+        for(Country c : countriesList){
+            c.occupateTerritories();
+        }
         map.drawMap();
     }
 }

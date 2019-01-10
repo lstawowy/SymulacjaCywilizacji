@@ -1,10 +1,7 @@
 package com.spring.simulation.greek.map_generator;
 
 import com.spring.simulation.greek.Simulation.Country;
-import com.spring.simulation.greek.enums.ClimateType;
-import com.spring.simulation.greek.enums.CountryType;
-import com.spring.simulation.greek.enums.AreaType;
-import com.spring.simulation.greek.enums.ResourceType;
+import com.spring.simulation.greek.enums.*;
 
 public class Cell {
 
@@ -25,7 +22,13 @@ public class Cell {
   private boolean coal;
   private boolean lead;
 
-  private int population;
+  private double population;
+
+  private double areaFriendlinessFactor;
+  private double provinceValue;
+  private double industrialPotential;
+  private double productionAbilities;
+  private double marketPotential;
 
   public Cell(int x, int y) {
     this.x = x;
@@ -37,7 +40,6 @@ public class Cell {
     copper = false;
     coal = false;
     lead = false;
-    population = 10;  //basic populatrion
   }
 
   //zyznosc bedzie ustalana proporcjonalnie do wysokosci n.p.m.
@@ -59,6 +61,7 @@ public class Cell {
       areaType = AreaType.SEA;
       fertility = 0;
       distanceToSea = 0;
+      distanceToRiver = 0;
     } else {
       areaType = AreaType.LAND;
       countFertility(c);
@@ -70,7 +73,7 @@ public class Cell {
     if (c < 200) {
       areaType = AreaType.RIVER;
       fertility = 80;
-      distanceToRiver = 0;
+      distanceToRiver = 1;
     }
   }
 
@@ -120,6 +123,82 @@ public class Cell {
       setLead(true);
   }
 
+  public void countAreaFriendlinessFactor(){
+    areaFriendlinessFactor = getClimateFactor()*getAreaFactor();
+  }
+
+  public void countPopulation(){
+    population = Score.basicPopulation * areaFriendlinessFactor;
+  }
+
+  public void countIndustrialPotential(){
+    double potential = 0;
+    potential = potential + Score.copperProd + Score.coalProd + Score.leadProd + Score.ironProd;
+    potential = potential + getNumberOfResources() * Score.numberOfResourcesBonus;
+    potential = potential + fertility;
+
+    industrialPotential = potential;
+  }
+
+  public void countMarketPotential(){
+    marketPotential = Score.maxSeaDistance/distanceToSea + Score.maxRiverDistance/distanceToRiver;
+  }
+
+  public int getNumberOfResources(){
+    int resourcesNumber = 0;
+    if(isCoal())
+      resourcesNumber++;
+    if(isCopper())
+      resourcesNumber++;
+    if(isIron())
+      resourcesNumber++;
+    if(isLead())
+      resourcesNumber++;
+
+    return resourcesNumber;
+  }
+
+  public void evaluateProvince(){
+    provinceValue = Score.basicProvinceValue * areaFriendlinessFactor
+                    + Score.industrialPotentialFactor * industrialPotential
+                    + Score.marketPotentialFactor * marketPotential;
+  }
+
+  ////////////////////////////////////// czynniki atrakcyjnosci terenu/////////////////////////
+
+  public double getClimateFactor(){
+    switch(climateType){
+      case MARINE:
+        return Score.marineFactor;
+      case STEPPE:
+        return Score.steppeFactor;
+      case MOUNTAIN:
+        return Score.mountainClimateFactor;
+      case CONTINENTAL:
+        return Score.continentalFactor;
+      case SUBTROPICAL:
+        return Score.subtropicalFactor;
+      case MEDITERRANEAN:
+        return Score.mediterraneanFactor;
+      default:
+        return Score.defaultFactor;
+    }
+  }
+
+  public double getAreaFactor(){
+    switch(areaType){
+      case LAND:
+        return Score.landFactor;
+      case COAST:
+        return Score.coastFactor;
+      case RIVER:
+        return Score.riverFactor;
+      case MOUNTAIN:
+        return Score.mountainAreaFactor;
+      default:
+        return Score.defaultFactor;
+    }
+  }
   ////////////////////////////////////// Settery, gettery /////////////////////////////////////
   public int getColor() {
     return color;
@@ -201,11 +280,27 @@ public class Cell {
     this.country = country;
   }
 
-  public int getPopulation() {
+  public double getPopulation() {
     return population;
   }
 
   public void setPopulation(int population) {
     this.population = population;
+  }
+
+  public Country getCountry() {
+    return country;
+  }
+
+  public int getX() {
+    return x;
+  }
+
+  public int getY() {
+    return y;
+  }
+
+  public double getProvinceValue() {
+    return provinceValue;
   }
 }
