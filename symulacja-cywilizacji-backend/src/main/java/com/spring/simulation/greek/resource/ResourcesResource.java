@@ -1,5 +1,6 @@
 package com.spring.simulation.greek.resource;
 
+import com.spring.simulation.greek.Simulation.Simulation;
 import com.spring.simulation.greek.map_generator.MapGenerator;
 import com.spring.simulation.greek.map_generator.MapReader;
 import org.springframework.http.MediaType;
@@ -39,7 +40,7 @@ public class ResourcesResource {
   @GetMapping(value = "/resources", produces = MediaType.IMAGE_PNG_VALUE)
   public @ResponseBody
   byte[] getResourcesMap() {
-    MapGenerator.main(null);
+    Simulation.main(null);
     return MapReader.readResourceAsByteArray("newmap.gif");
   }
 
