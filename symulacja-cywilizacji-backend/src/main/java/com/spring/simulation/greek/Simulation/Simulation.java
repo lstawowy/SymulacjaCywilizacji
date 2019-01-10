@@ -33,18 +33,40 @@ public class Simulation {
                     cell.setColor(0x0);
                 else
                     cell.setColor(0xFFFFFF);
+//                if(cell.getDistanceToRiver() == 40)
+//                    cell.setColor(0xED09C2);
             }
         }
+    }
+
+    public static int maxSeaDistance(){
+        int maxDistance = -1;
+        for(int i=0 ; i<Map.height ; ++i){
+            for(int j=0 ; j<Map.width ; ++j){
+                if(Map.grid[i][j].getDistanceToSea() > maxDistance)
+                    maxDistance = Map.grid[i][j].getDistanceToSea();
+            }
+        }
+        return maxDistance;
+    }
+
+    public static int maxRiverDistance(){
+        int maxDistance = -1;
+        for(int i=0 ; i<Map.height ; ++i){
+            for(int j=0 ; j<Map.width ; ++j){
+                if(Map.grid[i][j].getDistanceToRiver() > maxDistance && Map.grid[i][j].getDistanceToRiver() != Integer.MAX_VALUE)
+                    maxDistance = Map.grid[i][j].getDistanceToRiver();
+            }
+        }
+        return maxDistance;
     }
 
     public static void main(String[] args){
         Map map = MapGenerator.readDataFromMapImages();
         setColorsByCountries();
         map.evaluateProvinces();
-
         createInitialCountries();
         for(Country c : countriesList){
-            System.out.println(c.name);                 //debug
             c.occupateTerritories();
         }
         map.drawMap();

@@ -101,6 +101,8 @@ public class Map {
         }
         grid[i][j].countAreaFriendlinessFactor();
         grid[i][j].countPopulation();
+        grid[i][j].countIndustrialPotential();
+        grid[i][j].countMarketPotential();
         //inne czynniki
 
         grid[i][j].evaluateProvince();

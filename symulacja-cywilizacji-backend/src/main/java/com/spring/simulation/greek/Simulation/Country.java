@@ -1,6 +1,7 @@
 package com.spring.simulation.greek.Simulation;
 
 import com.spring.simulation.greek.enums.AreaType;
+import com.spring.simulation.greek.enums.Score;
 import com.spring.simulation.greek.map_generator.Cell;
 import com.spring.simulation.greek.map_generator.Map;
 import org.omg.CORBA.MARSHAL;
@@ -26,7 +27,7 @@ public class Country {
         countrySize = 0;
         Simulation.countries.put(name,this);
         Simulation.countryColor.put(this,color);
-        occupationAbility = 100;             ///to bedzie do zmiany, sparametryzowac
+        occupationAbility = 10000;             ///to bedzie do zmiany, sparametryzowac
 
         this.occupyTerritory(x,y, this);
     }
@@ -71,16 +72,39 @@ public class Country {
     }
 
     public void occupateTerritories(){
-        for(Cell c : border)
-            System.out.println(c.getX() + " " + c.getY() + " ma -> " + c.getProvinceValue());
         for(int i=0 ; i<occupationAbility ; ++i){
-            for(Cell c : border)
-                System.out.println(c.getX() + " " + c.getY() + " ma -> " + c.getProvinceValue());
-            border.sort((a,b)->Double.compare(a.getProvinceValue(),b.getProvinceValue()));
+            border.sort((a,b)->Double.compare(a.getProvinceValue()+individualFactors(a.getX(),a.getY()),
+                                              b.getProvinceValue()+individualFactors(b.getX(),b.getY())));
             Cell bestProvince = border.remove(border.size()-1);
-            System.out.println("Okupuje -> " + bestProvince.getX() + " " + bestProvince.getY());
             occupyTerritory(bestProvince.getX(), bestProvince.getY(), this);
         }
+    }
+
+    private double individualFactors(int x, int y){
+        double bonus = 0;
+        bonus += Score.securityBonus * areaProtection(x,y);
+
+        return bonus;
+    }
+
+    private double areaProtection(int x, int y){
+        double borderProtectingProvinces = 0;
+        for (int i = -1; i < 2; ++i) {
+            for (int j = -1; j < 2; ++j) {
+                int cx = x + i;
+                int cy = y + j;
+                if (cx < 0 || cx >= Map.height || cy < 0 || cy >= Map.width) {
+                    borderProtectingProvinces++;
+                    continue;
+                }
+                if(Map.grid[cx][cy].getCountry() == this){
+                    borderProtectingProvinces += 1;
+                }
+                if(Map.grid[cx][cy].getAreaType() == AreaType.SEA)
+                    borderProtectingProvinces += 0.3;
+            }
+        }
+        return borderProtectingProvinces;
     }
 
     public int getColor(){

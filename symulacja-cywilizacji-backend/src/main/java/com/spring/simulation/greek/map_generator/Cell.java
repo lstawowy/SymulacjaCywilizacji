@@ -26,6 +26,9 @@ public class Cell {
 
   private double areaFriendlinessFactor;
   private double provinceValue;
+  private double industrialPotential;
+  private double productionAbilities;
+  private double marketPotential;
 
   public Cell(int x, int y) {
     this.x = x;
@@ -58,6 +61,7 @@ public class Cell {
       areaType = AreaType.SEA;
       fertility = 0;
       distanceToSea = 0;
+      distanceToRiver = 0;
     } else {
       areaType = AreaType.LAND;
       countFertility(c);
@@ -127,9 +131,39 @@ public class Cell {
     population = Score.basicPopulation * areaFriendlinessFactor;
   }
 
-  public void evaluateProvince(){
-    provinceValue = Score.basicProvinceValue * areaFriendlinessFactor;
+  public void countIndustrialPotential(){
+    double potential = 0;
+    potential = potential + Score.copperProd + Score.coalProd + Score.leadProd + Score.ironProd;
+    potential = potential + getNumberOfResources() * Score.numberOfResourcesBonus;
+    potential = potential + fertility;
+
+    industrialPotential = potential;
   }
+
+  public void countMarketPotential(){
+    marketPotential = Score.maxSeaDistance/distanceToSea + Score.maxRiverDistance/distanceToRiver;
+  }
+
+  public int getNumberOfResources(){
+    int resourcesNumber = 0;
+    if(isCoal())
+      resourcesNumber++;
+    if(isCopper())
+      resourcesNumber++;
+    if(isIron())
+      resourcesNumber++;
+    if(isLead())
+      resourcesNumber++;
+
+    return resourcesNumber;
+  }
+
+  public void evaluateProvince(){
+    provinceValue = Score.basicProvinceValue * areaFriendlinessFactor
+                    + Score.industrialPotentialFactor * industrialPotential
+                    + Score.marketPotentialFactor * marketPotential;
+  }
+
   ////////////////////////////////////// czynniki atrakcyjnosci terenu/////////////////////////
 
   public double getClimateFactor(){
