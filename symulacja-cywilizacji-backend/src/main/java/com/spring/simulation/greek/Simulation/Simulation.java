@@ -17,8 +17,8 @@ public class Simulation {
     public static java.util.Map<Country,Integer> countryColor = new HashMap<>();
 
     private static void createInitialCountries(){
-        countriesList.add(new Country("Greece",420,360, 0x24FF39));
-        countriesList.add(new Country("Rome", 324,316, 0xF90A0A));
+        countriesList.add(new Country("Greece",360,420, 0x24FF39));
+        countriesList.add(new Country("Rome", 316,324, 0xF90A0A));
     }
 
     private static void setColorsByCountries(){
@@ -27,8 +27,8 @@ public class Simulation {
                 Cell cell = Map.grid[i][j];
                 if(cell.getAreaType() == AreaType.SEA)
                     cell.setColor(0x0AE4F9);
-                else if(cell.getAreaType() == AreaType.RIVER)
-                    cell.setColor(0x010EEB);
+//                else if(cell.getAreaType() == AreaType.RIVER)
+//                    cell.setColor(0x010EEB);
                 else if(cell.getAreaType() == AreaType.COAST)
                     cell.setColor(0x0);
                 else
@@ -41,7 +41,9 @@ public class Simulation {
         Map map = MapGenerator.readDataFromMapImages();
         setColorsByCountries();
         createInitialCountries();
-
+        for(Country c : countriesList){
+            c.conquerTerritory();
+        }
         map.drawMap();
     }
 }

@@ -208,4 +208,16 @@ public class Cell {
   public void setPopulation(int population) {
     this.population = population;
   }
+
+  public Country getCountry() {
+    return country;
+  }
+
+  public int getX() {
+    return x;
+  }
+
+  public int getY() {
+    return y;
+  }
 }
