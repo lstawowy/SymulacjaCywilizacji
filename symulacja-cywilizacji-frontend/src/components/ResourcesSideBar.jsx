@@ -11,11 +11,16 @@ const theme = {
 };
 
 const maps = [
-  {id: "resources", name: "Resources Map"},
+  {id: "resources", name: "Landform and rivers"},
   {id: "rivers", name: "Rivers Map"},
   {id: "rivers_only", name: "Rivers Only Map"},
   {id: "landform", name: "Landform Map"},
-  {id: "mountains", name: "Mountains Map"}
+  {id: "climate", name: "Climate Map"},
+  {id: "mountains", name: "Mountains Map"},
+  {id: "coal", name: "Coal Map"},
+  {id: "copper", name: "Copper Map"},
+  {id: "iron", name: "Iron Map"},
+  {id: "lead", name: "Lead Map"}
 ];
 
 export default class ResourcesSideBar extends React.Component {
