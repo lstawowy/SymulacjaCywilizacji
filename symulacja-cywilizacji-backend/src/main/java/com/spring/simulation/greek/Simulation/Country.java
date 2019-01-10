@@ -5,9 +5,7 @@ import com.spring.simulation.greek.map_generator.Cell;
 import com.spring.simulation.greek.map_generator.Map;
 import org.omg.CORBA.MARSHAL;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static com.spring.simulation.greek.Simulation.Simulation.countries;
 
@@ -63,12 +61,25 @@ public class Country {
         border.remove(Map.grid[x][y]);
     }
 
-    public void conquerTerritory(){
+    public void conquerRandomTerritory(){
         Random gen = new Random();
         for(int i=0 ; i<occupationAbility ; ++i){
             int rand = Math.abs(gen.nextInt()%border.size());
             Cell c = border.get(rand);
             occupyTerritory(c.getX(), c.getY(), this);
+        }
+    }
+
+    public void occupateTerritories(){
+        for(Cell c : border)
+            System.out.println(c.getX() + " " + c.getY() + " ma -> " + c.getProvinceValue());
+        for(int i=0 ; i<occupationAbility ; ++i){
+            for(Cell c : border)
+                System.out.println(c.getX() + " " + c.getY() + " ma -> " + c.getProvinceValue());
+            border.sort((a,b)->Double.compare(a.getProvinceValue(),b.getProvinceValue()));
+            Cell bestProvince = border.remove(border.size()-1);
+            System.out.println("Okupuje -> " + bestProvince.getX() + " " + bestProvince.getY());
+            occupyTerritory(bestProvince.getX(), bestProvince.getY(), this);
         }
     }
 

@@ -41,9 +41,11 @@ public class Simulation {
         Map map = MapGenerator.readDataFromMapImages();
         setColorsByCountries();
         map.evaluateProvinces();
+
         createInitialCountries();
         for(Country c : countriesList){
-            c.conquerTerritory();
+            System.out.println(c.name);                 //debug
+            c.occupateTerritories();
         }
         map.drawMap();
     }

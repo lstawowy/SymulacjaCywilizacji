@@ -25,6 +25,7 @@ public class Cell {
   private double population;
 
   private double areaFriendlinessFactor;
+  private double provinceValue;
 
   public Cell(int x, int y) {
     this.x = x;
@@ -124,6 +125,10 @@ public class Cell {
 
   public void countPopulation(){
     population = Score.basicPopulation * areaFriendlinessFactor;
+  }
+
+  public void evaluateProvince(){
+    provinceValue = Score.basicProvinceValue * areaFriendlinessFactor;
   }
   ////////////////////////////////////// czynniki atrakcyjnosci terenu/////////////////////////
 
@@ -259,5 +264,9 @@ public class Cell {
 
   public int getY() {
     return y;
+  }
+
+  public double getProvinceValue() {
+    return provinceValue;
   }
 }

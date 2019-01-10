@@ -101,6 +101,9 @@ public class Map {
         }
         grid[i][j].countAreaFriendlinessFactor();
         grid[i][j].countPopulation();
+        //inne czynniki
+
+        grid[i][j].evaluateProvince();
       }
     }
   }

@@ -27,4 +27,5 @@ public class Score {
     public static double distToRiver = 1;
 
     public static double basicPopulation = 1000.0;
+    public static double basicProvinceValue = 100.0;
 }
