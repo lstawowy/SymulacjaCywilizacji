@@ -18,7 +18,7 @@ public class Country {
     private long population;
     private int countrySize;
 
-    private int occupationAbility;
+    public int occupationAbility;
 
     Country(String name, int x, int y, int color){
         this.name = name;
@@ -27,7 +27,7 @@ public class Country {
         countrySize = 0;
         Simulation.countries.put(name,this);
         Simulation.countryColor.put(this,color);
-        occupationAbility = 10000;             ///to bedzie do zmiany, sparametryzowac
+        occupationAbility = 1;             ///to bedzie do zmiany, sparametryzowac
 
         this.occupyTerritory(x,y, this);
     }
@@ -47,7 +47,8 @@ public class Country {
         Cell c = Map.grid[x][y];
         return (x>=0 && y>=0 && x<Map.height && y<Map.width && c.getAreaType() != AreaType.SEA
                                                             && c.getCountry() != this
-                                                            && !(border.contains(c)));
+                                                            && !(border.contains(c))
+                                                            && c.getCountry() == null);
     }
     private void updateBorder(int x, int y){
         if(canBeBorder(x-1,y))
@@ -73,6 +74,8 @@ public class Country {
 
     public void occupateTerritories(){
         for(int i=0 ; i<occupationAbility ; ++i){
+            if(border.isEmpty())
+                break;
             border.sort((a,b)->Double.compare(a.getProvinceValue()+individualFactors(a.getX(),a.getY()),
                                               b.getProvinceValue()+individualFactors(b.getX(),b.getY())));
             Cell bestProvince = border.remove(border.size()-1);

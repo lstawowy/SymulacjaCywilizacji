@@ -36,5 +36,5 @@ public class Score {
     public static double maxSeaDistance = 20;
     public static double maxRiverDistance = 20;
 
-    public static double securityBonus = 30.0;
+    public static double securityBonus = 40.0;
 }

@@ -19,6 +19,9 @@ public class Simulation {
     private static void createInitialCountries(){
         countriesList.add(new Country("Greece",360,420, 0x24FF39));
         countriesList.add(new Country("Rome", 316,324, 0xF90A0A));
+        countriesList.add(new Country("Macedonia",306,386, 0xF8F60D));
+        countriesList.add(new Country("Germania",195,310, 0x7E3606));
+
     }
 
     private static void setColorsByCountries(){
@@ -61,13 +64,26 @@ public class Simulation {
         return maxDistance;
     }
 
+    private static int getLongestRound(){
+        int longest = 3000;
+//        for(Country c : countriesList){
+//            if(c.occupationAbility > longest)
+//                longest = c.occupationAbility;
+//        }
+        return longest;
+    }
+
     public static void main(String[] args){
         Map map = MapGenerator.readDataFromMapImages();
         setColorsByCountries();
         map.evaluateProvinces();
         createInitialCountries();
-        for(Country c : countriesList){
-            c.occupateTerritories();
+        int i = getLongestRound();
+        while(i>0) {
+            for (Country c : countriesList) {
+                c.occupateTerritories();
+            }
+            i--;
         }
         map.drawMap();
     }
