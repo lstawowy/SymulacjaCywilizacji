@@ -29,6 +29,7 @@ public class Cell {
   private double industrialPotential;
   private double productionAbilities;
   private double marketPotential;
+  private double defenseValue;
 
   public Cell(int x, int y) {
     this.x = x;
@@ -49,9 +50,10 @@ public class Cell {
     } else if (c <= 220 && c >= 165) {
       int range = 500;
       fertility = (c / range) * 100;
+      defenseValue = 1/(fertility+1)*100;
     } else {
       areaType = AreaType.MOUNTAIN;
-      fertility = 0;
+      fertility = 10;
     }
   }
 
@@ -144,6 +146,16 @@ public class Cell {
     marketPotential = Score.maxSeaDistance/distanceToSea + Score.maxRiverDistance/distanceToRiver;
   }
 
+  public void countDefenseValue(){
+    if(areaType == AreaType.MOUNTAIN){
+      defenseValue = Score.mountainDefense;
+    } else if(areaType == AreaType.RIVER){
+      defenseValue = Score.riverDefense;
+    } else{
+      defenseValue = 0;
+    }
+  }
+
   public int getNumberOfResources(){
     int resourcesNumber = 0;
     if(isCoal())
@@ -159,9 +171,10 @@ public class Cell {
   }
 
   public void evaluateProvince(){
-    provinceValue = Score.basicProvinceValue * areaFriendlinessFactor
+    provinceValue = Score.basicProvinceValue * areaFriendlinessFactor * Score.basicAreaFactor
                     + Score.industrialPotentialFactor * industrialPotential
-                    + Score.marketPotentialFactor * marketPotential;
+                    + Score.marketPotentialFactor * marketPotential
+                    + Score.defenseFactor * defenseValue;
   }
 
   ////////////////////////////////////// czynniki atrakcyjnosci terenu/////////////////////////
@@ -284,7 +297,7 @@ public class Cell {
     return population;
   }
 
-  public void setPopulation(int population) {
+  public void setPopulation(double population) {
     this.population = population;
   }
 
@@ -302,5 +315,13 @@ public class Cell {
 
   public double getProvinceValue() {
     return provinceValue;
+  }
+
+  public double getIndustrialPotential(){
+    return industrialPotential;
+  }
+
+  public void setIndustrialPotential(double p){
+    industrialPotential = p;
   }
 }

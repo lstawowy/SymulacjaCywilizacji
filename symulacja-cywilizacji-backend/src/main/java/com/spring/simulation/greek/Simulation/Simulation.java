@@ -12,6 +12,8 @@ import java.util.List;
 
 public class Simulation {
 
+    public static boolean firstRound;
+
     public static List<Country> countriesList = new LinkedList<Country>();
     public static java.util.Map<String,Country> countries = new HashMap<>();
     public static java.util.Map<Country,Integer> countryColor = new HashMap<>();
@@ -21,6 +23,7 @@ public class Simulation {
         countriesList.add(new Country("Rome", 316,324, 0xF90A0A));
         countriesList.add(new Country("Macedonia",306,386, 0xF8F60D));
         countriesList.add(new Country("Germania",195,310, 0x7E3606));
+        countriesList.add(new Country("Cartagena", 386,292, 0x6E00B0));
 
     }
 
@@ -65,26 +68,40 @@ public class Simulation {
     }
 
     private static int getLongestRound(){
-        int longest = 3000;
-//        for(Country c : countriesList){
-//            if(c.occupationAbility > longest)
-//                longest = c.occupationAbility;
-//        }
+        int longest = 0;
+        for(Country c : countriesList){
+            if(c.occupationAbility > longest)
+                longest = c.occupationAbility;
+        }
         return longest;
     }
 
     public static void main(String[] args){
+        firstRound = true;
+        int decades = 30;
         Map map = MapGenerator.readDataFromMapImages();
         setColorsByCountries();
         map.evaluateProvinces();
         createInitialCountries();
-        int i = getLongestRound();
-        while(i>0) {
-            for (Country c : countriesList) {
-                c.occupateTerritories();
+        for(int d=0 ; d<decades ; ++d) {
+            int i = 0;
+            int longest = getLongestRound();
+            for (Country c : countriesList)
+                c.startRound(firstRound);
+            firstRound = false;
+
+            while (i < longest) {
+                for (Country c : countriesList) {
+                    if (i < c.occupationAbility)
+                        c.occupateTerritories();
+                }
+                i++;
             }
-            i--;
+
+//            for (Country c : countriesList) {
+//                c.endRound();
+//            }
+            map.drawMap(d);
         }
-        map.drawMap();
     }
 }

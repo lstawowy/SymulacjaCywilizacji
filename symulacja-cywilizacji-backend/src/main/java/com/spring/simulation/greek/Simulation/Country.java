@@ -17,6 +17,10 @@ public class Country {
     private int color;
     private long population;
     private int countrySize;
+    private long industrialPotential;
+
+    private double populationIncrease;
+    private double industryIncrease;
 
     public int occupationAbility;
 
@@ -25,10 +29,13 @@ public class Country {
         this.color = color;
         population = 0;
         countrySize = 0;
+        industrialPotential = 0;
+        populationIncrease = Score.basicPopulationIncrease;
+        industryIncrease = Score.basicIndustryIncrease;
+
         Simulation.countries.put(name,this);
         Simulation.countryColor.put(this,color);
-        occupationAbility = 1;             ///to bedzie do zmiany, sparametryzowac
-
+        occupationAbility = Score.basicOccupationAbility;
         this.occupyTerritory(x,y, this);
     }
 
@@ -38,17 +45,18 @@ public class Country {
         occupiedArea.setColor(this.color);
         population += occupiedArea.getPopulation();
         countrySize++;
+        population += occupiedArea.getPopulation();
+        industrialPotential += occupiedArea.getIndustrialPotential();
 
         provinces.add(occupiedArea);
         updateBorder(x,y);
     }
 
     private boolean canBeBorder(int x, int y){
-        Cell c = Map.grid[x][y];
-        return (x>=0 && y>=0 && x<Map.height && y<Map.width && c.getAreaType() != AreaType.SEA
-                                                            && c.getCountry() != this
-                                                            && !(border.contains(c))
-                                                            && c.getCountry() == null);
+        return (x>=0 && y>=0 && x<Map.height && y<Map.width && Map.grid[x][y].getAreaType() != AreaType.SEA
+                                                            && Map.grid[x][y].getCountry() != this
+                                                            && !(border.contains(Map.grid[x][y]))
+                                                            && Map.grid[x][y].getCountry() == null);
     }
     private void updateBorder(int x, int y){
         if(canBeBorder(x-1,y))
@@ -73,19 +81,19 @@ public class Country {
     }
 
     public void occupateTerritories(){
-        for(int i=0 ; i<occupationAbility ; ++i){
+//        for(int i=0 ; i<occupationAbility ; ++i){
             if(border.isEmpty())
-                break;
+               return;
             border.sort((a,b)->Double.compare(a.getProvinceValue()+individualFactors(a.getX(),a.getY()),
                                               b.getProvinceValue()+individualFactors(b.getX(),b.getY())));
             Cell bestProvince = border.remove(border.size()-1);
             occupyTerritory(bestProvince.getX(), bestProvince.getY(), this);
-        }
+//        }
     }
 
     private double individualFactors(int x, int y){
         double bonus = 0;
-        bonus += Score.securityBonus * areaProtection(x,y);
+        bonus += Score.securityBonus * Score.defenseFactor * areaProtection(x,y);
 
         return bonus;
     }
@@ -108,6 +116,34 @@ public class Country {
             }
         }
         return borderProtectingProvinces;
+    }
+
+    public void startRound(boolean firstRound){
+        if(!firstRound){
+            for(Cell p : provinces){
+                p.setPopulation(p.getPopulation() + p.getPopulation()*populationIncrease/100);
+                p.setIndustrialPotential(p.getIndustrialPotential() + p.getIndustrialPotential()*industryIncrease/100);
+                p.evaluateProvince();
+            }
+            //update
+            industryIncrease = population/industrialPotential;
+            populationIncrease = industrialPotential/population * 100;
+//            occupationAbility = occupationAbility + Double.(occupationAbility*industryIncrease);
+        } else{
+            return;
+        }
+    }
+
+    public void endRound(){
+        long industry = 0;
+        long population = 0;
+        for(Cell c : provinces){
+            industry += c.getIndustrialPotential();
+            population += c.getPopulation();
+        }
+
+        this.industrialPotential = industry;
+        this.population = population;
     }
 
     public int getColor(){

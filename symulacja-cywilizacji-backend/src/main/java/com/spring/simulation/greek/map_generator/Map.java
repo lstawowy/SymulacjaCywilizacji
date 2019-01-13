@@ -103,6 +103,7 @@ public class Map {
         grid[i][j].countPopulation();
         grid[i][j].countIndustrialPotential();
         grid[i][j].countMarketPotential();
+        grid[i][j].countDefenseValue();
         //inne czynniki
 
         grid[i][j].evaluateProvince();
@@ -209,7 +210,7 @@ public class Map {
   }
 
   //na razie tylko do kontroli
-  public void drawMap() {
+  public void drawMap(int d) {
 //    setColorsByArea();
 //    setColorsByClimate();
     BufferedImage map = new BufferedImage(width, height, 5);
@@ -218,7 +219,7 @@ public class Map {
         map.setRGB(j, i, grid[i][j].getColor());
       }
     }
-    MapReader.saveImageInResources(map);
+    MapReader.saveImageInResources(map, d);
 
   }
 }
