@@ -78,7 +78,7 @@ public class Simulation {
 
     public static void main(String[] args){
         firstRound = true;
-        int decades = 30;
+        int decades = 100;
         Map map = MapGenerator.readDataFromMapImages();
         setColorsByCountries();
         map.evaluateProvinces();
@@ -98,9 +98,9 @@ public class Simulation {
                 i++;
             }
 
-//            for (Country c : countriesList) {
-//                c.endRound();
-//            }
+            for (Country c : countriesList) {
+                c.endRound();
+            }
             map.drawMap(d);
         }
     }

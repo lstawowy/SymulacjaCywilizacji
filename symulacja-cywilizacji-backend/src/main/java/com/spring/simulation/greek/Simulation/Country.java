@@ -56,7 +56,7 @@ public class Country {
         return (x>=0 && y>=0 && x<Map.height && y<Map.width && Map.grid[x][y].getAreaType() != AreaType.SEA
                                                             && Map.grid[x][y].getCountry() != this
                                                             && !(border.contains(Map.grid[x][y]))
-                                                            && Map.grid[x][y].getCountry() == null);
+                                                            /*&& Map.grid[x][y].getCountry() == null*/);
     }
     private void updateBorder(int x, int y){
         if(canBeBorder(x-1,y))
@@ -127,10 +127,21 @@ public class Country {
             }
             //update
             industryIncrease = population/industrialPotential;
-            populationIncrease = industrialPotential/population * 100;
-//            occupationAbility = occupationAbility + Double.(occupationAbility*industryIncrease);
+            populationIncrease = industrialPotential/200*(Score.randFactor(5,30)/100);
+//            System.out.println(name+ " "+ industryIncrease);
         } else{
             return;
+        }
+    }
+
+    private void countOccupationAbility(){
+        double progress = population/(countrySize*10);
+        if(progress < Score.lowProgressLevel){
+            occupationAbility = Score.lowOccupAbility;
+        } else if(progress > 100){
+            occupationAbility = Score.basicOccupationAbility + (int)progress%100;
+        } else{
+            occupationAbility = Score.basicOccupationAbility;
         }
     }
 
@@ -144,6 +155,7 @@ public class Country {
 
         this.industrialPotential = industry;
         this.population = population;
+        countOccupationAbility();
     }
 
     public int getColor(){

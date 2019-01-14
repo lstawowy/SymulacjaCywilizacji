@@ -1,5 +1,7 @@
 package com.spring.simulation.greek.enums;
 
+import java.util.Random;
+
 //Wspolczynniki dla pol w komorkach
 public class Score {
 
@@ -47,4 +49,13 @@ public class Score {
 
     public static double basicPopulationIncrease = 5.0;
     public static double basicIndustryIncrease = 5.0;
+
+    public static double lowProgressLevel = 80.0;
+    public static int lowOccupAbility = 0;
+
+    public static double randFactor(int d, int h){
+        Random gen = new Random();
+        double rand = (double)(gen.nextInt(h-d)+d);
+        return rand;
+    }
 }
