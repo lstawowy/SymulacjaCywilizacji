@@ -10,8 +10,8 @@ public class MapGenerator {
   public static Map readDataFromMapImages() {
     Map map = new Map();
 
-    map.readMap(MapReader.readResource("maps/mountains.jpg"), MapType.MOUNTAIN_MAP);
-    map.readMap(MapReader.readResource("maps/rivers.jpg"),MapType.RIVER_MAP);
+    map.readMap(MapReader.readResource("maps/mountains.png"), MapType.MOUNTAIN_MAP);
+    map.readMap(MapReader.readResource("maps/rivers.png"),MapType.RIVER_MAP);
     map.readMap(MapReader.readResource("maps/klimat.png"),MapType.CLIMATE_MAP);
     map.readNaturalResourcesMap(MapReader.readResource("maps/natural_resources_maps/iron.png"), ResourceType.IRON);
     map.readNaturalResourcesMap(MapReader.readResource("maps/natural_resources_maps/copper.png"), ResourceType.COPPER);

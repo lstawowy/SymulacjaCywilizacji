@@ -27,9 +27,10 @@ public class MapReader {
     return resource;
   }
 
-  static void saveImageInResources(BufferedImage bufferedImage) {
+  static void saveImageInResources(BufferedImage bufferedImage, int d) {
     try {
-      File outputfile = new File(RESOURCES_PATH + "newmap.gif");
+      String filename = "newmap"+d+".gif";
+      File outputfile = new File(RESOURCES_PATH + filename);
       ImageIO.write(bufferedImage, WRITE_FILE_FORMAT, outputfile);
     } catch (IOException e) {
       log.error(IOEXCEPTION_ERROR_MESSAGE, e);
