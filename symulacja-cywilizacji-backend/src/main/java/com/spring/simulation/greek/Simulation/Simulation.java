@@ -22,8 +22,25 @@ public class Simulation {
         countriesList.add(new Country("Greece",360,420, 0x24FF39));
         countriesList.add(new Country("Rome", 316,324, 0xF90A0A));
         countriesList.add(new Country("Macedonia",306,386, 0xF8F60D));
-        countriesList.add(new Country("Germania",195,310, 0x7E3606));
+        countriesList.add(new Country("Germania",195,310, 0xB2CFC3));
         countriesList.add(new Country("Cartagena", 386,292, 0x6E00B0));
+        countriesList.add(new Country("Slavic",159,397,0xFFAD11));
+        countriesList.add(new Country("Turkey",349,509,0xFF11BA));
+        countriesList.add(new Country("Hungary",229,382,0x11FFA2));
+        countriesList.add(new Country("Vikings",20,270,0xA1FF11));
+        countriesList.add(new Country("Espana",341,151,0x076705));
+        countriesList.add(new Country("Russia",112,513,0x85152A));
+        countriesList.add(new Country("Gallia",231,208,0x855A15));
+        countriesList.add(new Country("Denmark",88,288,0x969696));
+
+        countriesList.add(new Country("Britain",173,166,0xFFA905));
+        countriesList.add(new Country("Scotland",161,186,0xFF0555));
+        countriesList.add(new Country("Walia",108,165,0x3405FF));
+        countriesList.add(new Country("Irleand",121,118,0x04CE25));
+        countriesList.add(new Country("Bulgaria",293,481,0x600092));
+        countriesList.add(new Country("Netherlands",158,244,0x00CD89));
+
+
 
     }
 
@@ -78,16 +95,18 @@ public class Simulation {
 
     public static void main(String[] args){
         firstRound = true;
-        int decades = 100;
+        int iterations = 200;
         Map map = MapGenerator.readDataFromMapImages();
         setColorsByCountries();
         map.evaluateProvinces();
         createInitialCountries();
-        for(int d=0 ; d<decades ; ++d) {
+        for(int d=0 ; d<iterations ; ++d) {
             int i = 0;
             int longest = getLongestRound();
-            for (Country c : countriesList)
+            for (Country c : countriesList) {
+//                System.out.println(c.name + " " + c.getForce());
                 c.startRound(firstRound);
+            }
             firstRound = false;
 
             while (i < longest) {
@@ -102,6 +121,7 @@ public class Simulation {
                 c.endRound();
             }
             map.drawMap(d);
+//            System.out.println("*********************************************");
         }
     }
 }

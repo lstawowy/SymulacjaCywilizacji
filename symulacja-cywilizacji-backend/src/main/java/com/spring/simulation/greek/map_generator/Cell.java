@@ -324,4 +324,8 @@ public class Cell {
   public void setIndustrialPotential(double p){
     industrialPotential = p;
   }
+
+  public double getDefenseValue(){
+    return defenseValue;
+  }
 }
