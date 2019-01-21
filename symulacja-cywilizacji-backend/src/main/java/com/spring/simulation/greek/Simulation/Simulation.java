@@ -32,7 +32,6 @@ public class Simulation {
         countriesList.add(new Country("Russia",112,513,0x85152A));
         countriesList.add(new Country("Gallia",231,208,0x855A15));
         countriesList.add(new Country("Denmark",88,288,0x969696));
-
         countriesList.add(new Country("Britain",173,166,0xFFA905));
         countriesList.add(new Country("Scotland",161,186,0xFF0555));
         countriesList.add(new Country("Walia",108,165,0x3405FF));
@@ -50,14 +49,10 @@ public class Simulation {
                 Cell cell = Map.grid[i][j];
                 if(cell.getAreaType() == AreaType.SEA)
                     cell.setColor(0x0AE4F9);
-//                else if(cell.getAreaType() == AreaType.RIVER)
-//                    cell.setColor(0x010EEB);
                 else if(cell.getAreaType() == AreaType.COAST)
                     cell.setColor(0x0);
                 else
                     cell.setColor(0xFFFFFF);
-//                if(cell.getDistanceToRiver() == 40)
-//                    cell.setColor(0xED09C2);
             }
         }
     }
@@ -104,7 +99,6 @@ public class Simulation {
             int i = 0;
             int longest = getLongestRound();
             for (Country c : countriesList) {
-//                System.out.println(c.name + " " + c.getForce());
                 c.startRound(firstRound);
             }
             firstRound = false;
@@ -121,7 +115,6 @@ public class Simulation {
                 c.endRound();
             }
             map.drawMap(d);
-//            System.out.println("*********************************************");
         }
     }
 }

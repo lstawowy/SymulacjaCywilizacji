@@ -12,11 +12,10 @@ public class Cell {
   private Country country;
   private AreaType areaType;
   private ClimateType climateType;
-  private int fertility;  //zyznosc gleby, produktywnosc w procentach
+  private int fertility;
   private int distanceToSea;
   private int distanceToRiver;
 
-  //Surowce naturalne
   private boolean iron;
   private boolean copper;
   private boolean coal;
@@ -27,7 +26,6 @@ public class Cell {
   private double areaFriendlinessFactor;
   private double provinceValue;
   private double industrialPotential;
-  private double productionAbilities;
   private double marketPotential;
   private double defenseValue;
 
@@ -43,7 +41,6 @@ public class Cell {
     lead = false;
   }
 
-  //zyznosc bedzie ustalana proporcjonalnie do wysokosci n.p.m.
   private void countFertility(int c) {
     if (c > 220) {
       fertility = 100;
@@ -177,7 +174,6 @@ public class Cell {
                     + Score.defenseFactor * defenseValue;
   }
 
-  ////////////////////////////////////// czynniki atrakcyjnosci terenu/////////////////////////
 
   public double getClimateFactor(){
     switch(climateType){
@@ -212,7 +208,8 @@ public class Cell {
         return Score.defaultFactor;
     }
   }
-  ////////////////////////////////////// Settery, gettery /////////////////////////////////////
+
+
   public int getColor() {
     return color;
   }

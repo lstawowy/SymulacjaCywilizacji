@@ -13,7 +13,6 @@ public class Map {
   public static int height;
   public static int width;
   public static Cell[][] grid;
-//  private Date timestamp;
 
   Map() {
     width = 728;
@@ -84,7 +83,7 @@ public class Map {
         if (cx < 0 || cx >= height || cy < 0 || cy >= width || (cx == x && cy == y)) {
           continue;
         }
-        if(grid[cx][cy].getAreaType() == AreaType.SEA)   //nie potrzeba odleglosci punktu na morzu od rzeki
+        if(grid[cx][cy].getAreaType() == AreaType.SEA)
           continue;
         if (grid[cx][cy].getWaterDistance(areaType) > (distance + 1)) {
           grid[cx][cy].setWaterDistace(distance + 1, areaType);
@@ -104,14 +103,12 @@ public class Map {
         grid[i][j].countIndustrialPotential();
         grid[i][j].countMarketPotential();
         grid[i][j].countDefenseValue();
-        //inne czynniki
 
         grid[i][j].evaluateProvince();
       }
     }
   }
 
-  ///////////////////////////////////////// Rysowanie map //////////////////////////////////////////////////
 
   public void readMap(BufferedImage map, MapType maptype) {
     for (int i = 0; i < height; ++i) {

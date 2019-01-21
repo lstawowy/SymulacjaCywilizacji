@@ -2,7 +2,6 @@ package com.spring.simulation.greek.enums;
 
 import java.util.Random;
 
-//Wspolczynniki dla pol w komorkach
 public class Score {
 
     public static double defaultFactor = 1.0;
@@ -24,10 +23,6 @@ public class Score {
     public static double steppeFactor = 0.5;
     public static double subtropicalFactor = 0.9;
     public static double mediterraneanFactor = 1;
-//
-//    public static double fertility = 1;
-//    public static double distToSea = 1;
-//    public static double distToRiver = 1;
 
     public static double marketPotentialFactor = 1.3;
     public static double industrialPotentialFactor = 0.5;
