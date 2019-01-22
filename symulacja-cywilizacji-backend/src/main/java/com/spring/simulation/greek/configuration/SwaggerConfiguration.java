@@ -36,8 +36,8 @@ public class SwaggerConfiguration extends WebMvcConfigurationSupport {
 
   private ApiInfo apiInfo() {
     return new ApiInfo(
-        "Civilisation Simulation",
-        "Simulation of civilisation",
+        "Civilisation simulation",
+        "simulation of civilisation",
         "0.0.1-SNAPSHOT",
         "",
         new Contact("Łukasz", "", "l.w.stawowy@gmail.com"),

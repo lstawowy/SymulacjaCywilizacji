@@ -6,6 +6,7 @@ import com.spring.simulation.greek.enums.MapType;
 import com.spring.simulation.greek.enums.ResourceType;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Date;
 
 public class Map {
@@ -13,8 +14,11 @@ public class Map {
   public static int height;
   public static int width;
   public static Cell[][] grid;
+  private MapReader mapReader;
 
   Map() {
+    mapReader = new MapReader();
+
     width = 728;
     height = 420;
     Map.grid = new Cell[height][];
@@ -216,7 +220,11 @@ public class Map {
         map.setRGB(j, i, grid[i][j].getColor());
       }
     }
-    MapReader.saveImageInResources(map, d);
-
+    mapReader.saveImageInResources(map, d);
+    try {
+      mapReader.saveImageInDatabase(map, d);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
