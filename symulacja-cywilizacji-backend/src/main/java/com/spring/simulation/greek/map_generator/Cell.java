@@ -1,6 +1,6 @@
 package com.spring.simulation.greek.map_generator;
 
-import com.spring.simulation.greek.Simulation.Country;
+import com.spring.simulation.greek.simulation.Country;
 import com.spring.simulation.greek.enums.*;
 
 public class Cell {

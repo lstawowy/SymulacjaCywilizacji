@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/map")
 public class CivilisationsResource {
 
-  @GetMapping(value = "/current", produces = MediaType.IMAGE_JPEG_VALUE)
+  @GetMapping(value = "/current/{iteration}", produces = MediaType.IMAGE_JPEG_VALUE)
   public @ResponseBody
-  byte[] getCurrentMap() {
-    return MapReader.readResourceAsByteArray("newmap.gif");
+  byte[] getCurrentMap(@PathVariable("iteration") int iteration) {
+    return MapReader.readResourceAsByteArray("newmap"+iteration+".gif");
   }
 
   @GetMapping(value = "/bc_600", produces = MediaType.IMAGE_JPEG_VALUE)

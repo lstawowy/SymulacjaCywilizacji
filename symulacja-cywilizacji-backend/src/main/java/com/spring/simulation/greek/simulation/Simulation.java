@@ -1,4 +1,4 @@
-package com.spring.simulation.greek.Simulation;
+package com.spring.simulation.greek.simulation;
 
 import com.spring.simulation.greek.enums.AreaType;
 import com.spring.simulation.greek.map_generator.Cell;
@@ -8,8 +8,9 @@ import com.spring.simulation.greek.map_generator.MapGenerator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import org.springframework.stereotype.Controller;
 
-
+@Controller
 public class Simulation {
 
     public static boolean firstRound;
@@ -90,7 +91,7 @@ public class Simulation {
 
     public static void main(String[] args){
         firstRound = true;
-        int iterations = 200;
+        int iterations = 201;
         Map map = MapGenerator.readDataFromMapImages();
         setColorsByCountries();
         map.evaluateProvinces();

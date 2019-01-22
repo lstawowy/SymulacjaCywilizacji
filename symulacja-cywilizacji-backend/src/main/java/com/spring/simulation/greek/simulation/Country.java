@@ -1,15 +1,12 @@
-package com.spring.simulation.greek.Simulation;
+package com.spring.simulation.greek.simulation;
 
 import com.spring.simulation.greek.enums.AreaType;
 import com.spring.simulation.greek.enums.CountryAttitude;
 import com.spring.simulation.greek.enums.Score;
 import com.spring.simulation.greek.map_generator.Cell;
 import com.spring.simulation.greek.map_generator.Map;
-import org.omg.CORBA.MARSHAL;
 
 import java.util.*;
-
-import static com.spring.simulation.greek.Simulation.Simulation.countries;
 
 public class Country {
     public String name;

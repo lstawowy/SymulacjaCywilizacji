@@ -1,6 +1,6 @@
 package com.spring.simulation.greek.resource;
 
-import com.spring.simulation.greek.Simulation.Simulation;
+import com.spring.simulation.greek.simulation.Simulation;
 import com.spring.simulation.greek.map_generator.MapReader;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +25,13 @@ public class ResourcesResource {
   @GetMapping(value = "/rivers", produces = MediaType.IMAGE_PNG_VALUE)
   public @ResponseBody
   byte[] getRiversMap() {
-    return MapReader.readResourceAsByteArray(MAPS_PATH + "rivers.jpg");
+    return MapReader.readResourceAsByteArray(MAPS_PATH + "rivers.png");
   }
 
   @GetMapping(value = "/mountains", produces = MediaType.IMAGE_PNG_VALUE)
   public @ResponseBody
   byte[] getMountainsMap() {
-    return MapReader.readResourceAsByteArray(MAPS_PATH + "mountains.jpg");
+    return MapReader.readResourceAsByteArray(MAPS_PATH + "mountains.png");
   }
 
   @GetMapping(value = "/rivers_only", produces = MediaType.IMAGE_PNG_VALUE)
