@@ -10,7 +10,7 @@ export default class Resources extends Component {
 
     this.state = {
       map: null,
-      current_url: "http://localhost:8080/map/resources"
+      current_url: "http://localhost:8080/map/landform"
     };
   }
 
@@ -25,7 +25,12 @@ export default class Resources extends Component {
         <NavigateBar />
         <ResourcesSideBar setCurrentUrl={this.setCurrentUrl} />
         <div className='MainComponent'>
-          <img alt='ResourceImage' id='ResourceImage' src={this.state.current_url} />
+          <img
+            className='ResourceImage'
+            alt='ResourceImage'
+            id='ResourceImage'
+            src={this.state.current_url}
+          />
         </div>
       </div>
     );

@@ -11,12 +11,13 @@ const theme = {
 };
 
 const maps = [
-  {id: "current", name: "Current Map"},
+  {id: "current/0", name: "Current Map"},
   {id: "bc_600", name: "Map 600 BC"},
   {id: "bc_650", name: "Map 650 BC"},
   {id: "bc_700", name: "Map 700 BC"},
   {id: "bc_750", name: "Map 750 BC"},
-  {id: "bc_800", name: "Map 800 BC"}
+  {id: "bc_800", name: "Map 800 BC"},
+  {id: "run", name: "RUN!"}
 ];
 
 export default class CivilisationsSideBar extends React.Component {
@@ -28,7 +29,7 @@ export default class CivilisationsSideBar extends React.Component {
   render() {
     return (
       <div className='Sidebar'>
-        <SideNav id='Sidenav' theme={theme} defaultSelectedPath='current'>
+        <SideNav id='Sidenav' theme={theme} defaultSelectedPath='current/0'>
           {maps.map(map => (
             <Nav id={map.id} onClick={this.setCurrentUrl.bind(map.id)}>
               {map.name}

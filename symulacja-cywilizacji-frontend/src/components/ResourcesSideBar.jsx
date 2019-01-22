@@ -11,10 +11,9 @@ const theme = {
 };
 
 const maps = [
-  {id: "resources", name: "Landform and rivers"},
+  {id: "landform", name: "Landform Map"},
   {id: "rivers", name: "Rivers Map"},
   {id: "rivers_only", name: "Rivers Only Map"},
-  {id: "landform", name: "Landform Map"},
   {id: "climate", name: "Climate Map"},
   {id: "mountains", name: "Mountains Map"},
   {id: "coal", name: "Coal Map"},
@@ -32,7 +31,7 @@ export default class ResourcesSideBar extends React.Component {
   render() {
     return (
       <div className='Sidebar'>
-        <SideNav id='Sidenav' theme={theme} defaultSelectedPath='resources'>
+        <SideNav id='Sidenav' theme={theme} defaultSelectedPath='landform'>
           {maps.map(map => (
             <Nav id={map.id} onClick={this.setCurrentUrl.bind(map.id)}>
               {map.name}

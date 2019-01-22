@@ -1,3 +1,64 @@
 .About {
-  text-align: center;
+  text-align: left;
+}
+
+.AboutText {
+  height: 60%;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  margin-top: 50px;
+  margin-left: 50px;
+  position: absolute;
+  top: 100%;
+  -webkit-animation: scroll 100s linear 4s infinite;
+  -moz-animation: scroll 100s linear 4s infinite;
+  -ms-animation: scroll 100s linear 4s infinite;
+  -o-animation: scroll 100s linear 4s infinite;
+  animation: scroll 100s linear 4s infinite;
+}
+
+@-webkit-keyframes scroll {
+  0% {
+    top: 40%;
+  }
+  100% {
+    top: -100%;
+  }
+}
+
+@-moz-keyframes scroll {
+  0% {
+    top: 40%;
+  }
+  100% {
+    top: -100%;
+  }
+}
+
+@-ms-keyframes scroll {
+  0% {
+    top: 40%;
+  }
+  100% {
+    top: -100%;
+  }
+}
+
+@-o-keyframes scroll {
+  0% {
+    top: 40%;
+  }
+  100% {
+    top: -100%;
+  }
+}
+
+@keyframes scroll {
+  0% {
+    top: 40%;
+  }
+  100% {
+    top: -100%;
+  }
 }

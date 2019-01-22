@@ -1,16 +1,6 @@
 import React from "react";
 import "./NavigateBar.css";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarNav,
-  NavItem,
-  NavLink,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "mdbreact";
+import {Navbar, NavbarBrand, NavbarNav, NavItem, NavLink} from "mdbreact";
 import {BrowserRouter} from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -31,12 +21,12 @@ class NavigateBar extends React.Component {
               </NavbarBrand>
               <NavItem className='Item'>
                 <NavLink to='/resources' onClick='this.refreshPage()'>
-                  Resources Map
+                  Resources
                 </NavLink>
               </NavItem>
               <NavItem className='Item'>
                 <NavLink to='/civilisations' onClick='this.refreshPage()'>
-                  Civilisations Map
+                  Civilisations
                 </NavLink>
               </NavItem>
               <NavItem className='Item'>
@@ -44,18 +34,6 @@ class NavigateBar extends React.Component {
                   About
                 </NavLink>
               </NavItem>
-              <Dropdown className='Item'>
-                <DropdownToggle nav caret>
-                  Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>Greek</DropdownItem>
-                  <DropdownItem>Roman</DropdownItem>
-                  <DropdownItem>Random</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>Reset</DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
             </NavbarNav>
           </BrowserRouter>
         </Navbar>

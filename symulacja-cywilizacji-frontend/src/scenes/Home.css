@@ -5,3 +5,7 @@ body {
 .Home {
   text-align: center;
 }
+
+.HomeImage {
+  width: 50%;
+}

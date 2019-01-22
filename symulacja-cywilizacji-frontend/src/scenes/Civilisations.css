@@ -7,9 +7,19 @@
 .MainComponent {
   display: flex;
   max-width: 100%;
-  min-height: 100%;
+  max-height: 500px;
   margin: 0;
   padding: 0;
   top: 0;
   right: 0;
+}
+
+.ResourceImage {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.CivilisationsImage {
+  min-width: 100%;
+  min-height: 100%;
 }
