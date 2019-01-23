@@ -30,7 +30,7 @@ class ProgressComponent extends React.Component {
     return (
       <div className='ProgressComponent'>
         <MDBBtn className='ProgressButton' color='primary' rounded onClick={this.nextStep}>
-          Add 2 years
+          Next step
         </MDBBtn>
         <MDBBtn className='ProgressButton' color='primary' rounded onClick={this.reset}>
           Reset
